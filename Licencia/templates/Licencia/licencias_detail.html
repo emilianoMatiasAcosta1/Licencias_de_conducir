@@ -1,0 +1,18 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+
+{% block central %}
+
+    <h2 style="color: coral;">| Detalle de usuario  </h2>
+
+    <div>
+        <li>
+        {{usuario.nombre}}  |  {{usuario.apellido}}  |  {{usuario.documento}}  |  {{usuario.motivo}}  |   
+        <a href="{% url 'licencia-actualizar' usuario.id %}">Actualizar </a>
+        <a href="{% url 'licencia-borrar' usuario.id %}">Borrar</a>
+        </li>
+    </div>
+    
+
+{% endblock %}

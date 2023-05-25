@@ -1,0 +1,14 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+
+{% block central %}
+
+        <form  method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input  type="submit"   value="Crear/Act" >
+
+        </form>
+
+{% endblock %}

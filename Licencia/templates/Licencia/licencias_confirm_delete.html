@@ -1,0 +1,19 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+{% block central %}
+    <h4 style="color: red;"> Estas seguro que deseas eliminar usuario {{usuario.nombre}} {{usuario.apellido}}?</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <input class="btn btn-primary" type="submit"  value="Borrar">
+        <a class="btn btn-primary" href="{% url 'licencia-lista' %}">Cancelar</a>
+    </form>
+
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,22 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+{% block central %}
+    <h2 style="color: coral;">LISTA DE USUARIOS</h2>
+    <ul>
+    {% for n in usuario  %}
+        {% if n.motivo != 'Perdida' %}
+   
+       <li> {{n.nombre}} / {{n.apellido}} / {{n.motivo}} 
+        <a href="{% url 'licencia-detalle' n.id %}">Detalle</a>
+        <a href="{% url 'licencia-actualizar' n.id %}">Actualizar </a>
+        <a href="{% url 'licencia-borrar' n.id %}">Borrar</a>
+       </li>
+       {% else %}
+       <li>No se puede mostrar</li>
+    
+    {% endif %}
+    {% endfor %}
+    </ul>
+{% endblock %}
+
