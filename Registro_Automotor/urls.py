@@ -15,15 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Licencia.views import indice, LicenciasList, LicenciasDetail, LicenciasUpdate, LicenciasDelete, LicenciasCreate, LicenciasSearch
+from Licencia.views import ( indice, LicenciasList, LicenciasDetail, LicenciasUpdate, 
+LicenciasDelete, LicenciasCreate, LicenciasSearch, Login, SignUp, Logout
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('licencia', indice, name='indice'),
-    path('licencia/lista', LicenciasList.as_view(), name='licencia-lista'),
+    path('licencia/lista', LicenciasList.as_view(), name='licencia-lista'), 
     path('licencia/detalle/<pk>', LicenciasDetail.as_view(), name='licencia-detalle'),
     path('licencia/actualizar/<pk>', LicenciasUpdate.as_view(), name='licencia-actualizar'),
     path('licencia/borrar/<pk>', LicenciasDelete.as_view(), name='licencia-borrar'),
     path('licencia/crear', LicenciasCreate.as_view(), name='licencia-crear'),
-    path('licencia/buscar', LicenciasSearch.as_view(), name='licencia-buscar')
+    path('licencia/buscar', LicenciasSearch.as_view(), name='licencia-buscar'),
+    path('login/', Login.as_view(), name='login'),
+    path('signup/', SignUp.as_view(), name='signup'),
+    path('logout/', Logout.as_view(), name='logout')
 ]

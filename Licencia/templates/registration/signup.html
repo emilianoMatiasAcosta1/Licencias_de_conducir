@@ -1,0 +1,15 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+
+{% block central %}
+<div>
+    <h2>· Registrarme</h2>
+    <form method="POST">
+        {% csrf_token%}
+        {{form.as_p}}
+        <input type="submit"  value="Registrarme">
+    </form>
+</div>    
+
+{% endblock %}

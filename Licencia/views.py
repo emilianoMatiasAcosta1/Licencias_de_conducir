@@ -4,6 +4,10 @@ from django.shortcuts import render
 from Licencia.models import Licencias
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView   
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def indice(request):
@@ -15,18 +19,18 @@ class LicenciasList(ListView):
     context_object_name = 'usuario'
 
 
-class LicenciasDetail(DetailView):
+class LicenciasDetail(LoginRequiredMixin, DetailView):
     model = Licencias
     context_object_name = 'usuario'
 
 
-class LicenciasUpdate(UpdateView):
+class LicenciasUpdate(LoginRequiredMixin, UpdateView):
     model = Licencias 
     success_url = reverse_lazy('licencia-lista')
     fields = ['motivo']
 
 
-class LicenciasDelete(DeleteView):
+class LicenciasDelete(LoginRequiredMixin, DeleteView):
     model = Licencias
     context_object_name = 'usuario'
     success_url = reverse_lazy('licencia-lista')
@@ -38,7 +42,7 @@ class LicenciasCreate(CreateView):
     success_url = reverse_lazy('licencia-lista')
 
 
-class LicenciasSearch(ListView):
+class LicenciasSearch(LoginRequiredMixin, ListView):
     model = Licencias
     context_object_name = 'usuario'
 
@@ -46,6 +50,26 @@ class LicenciasSearch(ListView):
         criterio = self.request.GET.get("criterio")
         resultado = (Licencias.objects.filter(documento__icontains=criterio).all())
         return resultado
+    
+
+class Login(LoginView):
+    next_page = reverse_lazy('indice') 
+
+
+
+class SignUp(CreateView):
+    form_class = UserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('licencia-lista')
+
+
+class Logout(LogoutView):
+    template_name = 'registration/logout.html'    
+
+
+
+    
+           
     
 
 

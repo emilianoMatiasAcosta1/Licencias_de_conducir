@@ -1,0 +1,12 @@
+{% extends 'Licencia/indice.html' %}
+{% load static %}
+
+{% block central %}
+<h2>· Ingresar</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit"  value="Ingresar" >
+    </form>
+
+{% endblock %}
