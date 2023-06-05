@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView, U
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.forms import UserCreationForm 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 def indice(request):
@@ -19,18 +19,32 @@ class LicenciasList(ListView):
     context_object_name = 'usuario'
 
 
+class LicenciasMineList(LoginRequiredMixin, LicenciasList):
+    
+    def get_queryset(self):
+        return Licencias.objects.filter(id_usuario=self.request.user.id).all()
+
+
 class LicenciasDetail(LoginRequiredMixin, DetailView):
     model = Licencias
     context_object_name = 'usuario'
 
 
-class LicenciasUpdate(LoginRequiredMixin, UpdateView):
+class PermisoSoloDueño(UserPassesTestMixin):
+
+    def test_func(self):                                                                        # Esto es una funcion que tiene que devolver un verdadero o un falso  
+        user_id = self.request.user.id
+        post_id = self.kwargs.get('pk') 
+        return Licencias.objects.filter(id_usuario=user_id, id=post_id).exists()
+    
+
+class LicenciasUpdate(LoginRequiredMixin,PermisoSoloDueño ,UpdateView):
     model = Licencias 
     success_url = reverse_lazy('licencia-lista')
-    fields = ['motivo']
+    fields = ['motivo','id_usuario']
 
-
-class LicenciasDelete(LoginRequiredMixin, DeleteView):
+    
+class LicenciasDelete(LoginRequiredMixin, PermisoSoloDueño, DeleteView):
     model = Licencias
     context_object_name = 'usuario'
     success_url = reverse_lazy('licencia-lista')
@@ -54,7 +68,6 @@ class LicenciasSearch(LoginRequiredMixin, ListView):
 
 class Login(LoginView):
     next_page = reverse_lazy('indice') 
-
 
 
 class SignUp(CreateView):

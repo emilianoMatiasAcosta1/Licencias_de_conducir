@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Licencia.views import ( indice, LicenciasList, LicenciasDetail, LicenciasUpdate, 
-LicenciasDelete, LicenciasCreate, LicenciasSearch, Login, SignUp, Logout
+LicenciasDelete, LicenciasCreate, LicenciasSearch, Login, SignUp, Logout, LicenciasMineList
 )
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     path('licencia/buscar', LicenciasSearch.as_view(), name='licencia-buscar'),
     path('login/', Login.as_view(), name='login'),
     path('signup/', SignUp.as_view(), name='signup'),
-    path('logout/', Logout.as_view(), name='logout')
+    path('logout/', Logout.as_view(), name='logout'),
+    path('licencia/lista/mine', LicenciasMineList.as_view(), name='licencia-mine')
 ]

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User 
 
 MOTIVO_NUEVO = 'Nuevo'
 MOTIVO_RENOVACION = 'Renovacion'
@@ -16,6 +17,7 @@ class Licencias(models.Model):                                                  
     documento =  models.CharField(max_length=100)
     motivo =  models.CharField(max_length=100, choices=MOTIVO, default= MOTIVO_NUEVO)
     foto = models.ImageField(null=True, blank=True , upload_to='mi_licencia')
+    id_usuario = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='id_usuario')
 
 
 
